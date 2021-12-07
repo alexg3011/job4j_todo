@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <title>TODO</title>
+
+    <script>
+        getList();
+
+        function getList() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/job4j_todo_war_exploded/item.do",
+                dataType: "json",
+                data: {
+                    show_all: $('#show_all').is(':checked')
+                }
+            }).done(function (data) {
+                showAllItems(data);
+            }).fail(function () {
+                console.log('error into getList');
+            });
+        }
+
+        function showAllItems(data) {
+            $('#table tbody > tr').html('');
+            for (let i = 0; i < data.length; i++) {
+                let id = data[i]['id'];
+                let description = data[i]['description'];
+                let created = data[i]['created'];
+                let done = data[i]['done'];
+                $('#table tr:last').after(
+                    '<tr>' +
+                    '<td>' + '<input type="checkbox" id="' + id + '" onchange="itemDone(id)">' + '</td>' +
+                    '<td>' + description + '</td>' +
+                    '<td>' + created + '</td>' +
+                    '</tr>');
+                if (done) {
+                    document.getElementById(id).setAttribute('checked', 'true');
+                }
+            }
+            console.log('take list done');
+        }
+
+        function itemDone(id) {
+            console.log('checked=' + id);
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/job4j_todo_war_exploded/update.do",
+                dataType: "json",
+                data: {
+                    id: id
+                }
+            });
+            setTimeout(getList, 1000);
+        }
+
+        function addItem() {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/job4j_todo_war_exploded/item.do",
+                dataType: "json",
+                data: {
+                    description: $('#add_item').val()
+                }
+            });
+            getList();
+        }
+    </script>
+    <title>TODO</title>
+</head>
+<body>
+
+<h1 align="center">TODO список</h1>
+
+<div class="container">
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            Добавить новое задание
+        </div>
+        <div class="card-body">
+            <form onsubmit="addItem()">
+                <input type="text" class="form-control" name="add_item" id="add_item"
+                       placeholder="Введите новое задание" required>
+                <br>
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            Список заданий
+        </div>
+        <div class="card-body">
+            <input type="checkbox" id="show_all" name="show_all" onchange="getList()">
+            <label for="show_all">Показать все</label>
+            <table class="table" id="table">
+                <thead>
+                <tr>
+                    <th scope="col">Выполнено</th>
+                    <th scope="col">Задание</th>
+                    <th scope="col">Дата создания</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
