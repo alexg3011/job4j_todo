@@ -1,5 +1,6 @@
 package ru.job4j.todo.storage;
 
+import org.hibernate.Transaction;
 import ru.job4j.todo.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,8 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 public class HbmStore implements Store {
 
@@ -23,35 +24,35 @@ public class HbmStore implements Store {
     }
 
     @Override
-    public Collection<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<Item> result = session.createQuery("from ru.job4j.todo.model.Item").list();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+    public List findAll() {
+        return tx(session -> session.createQuery("from ru.job4j.todo.model.Item").list());
+
     }
 
     @Override
     public void save(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
+        tx(session -> session.save(item));
     }
 
     @Override
     public void update(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List items = session.createQuery(
-                "from ru.job4j.todo.model.Item where id = :id").setParameter("id", id).list();
-        Item item = (Item) items.get(0);
-        item.setDone(true);
-        session.update(item);
-        session.getTransaction().commit();
-        session.close();
+        tx(session -> session.createQuery(
+                "from ru.job4j.todo.model.Item where id = :id").setParameter("id", id).list());
+    }
+
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = sf.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     public static void main(String[] args) {
