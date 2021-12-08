@@ -21,7 +21,6 @@ import java.util.function.Function;
 public class HbmStore implements Store {
 
     private static final Logger LOG = Logger.getLogger(HbmStore.class);
-
     private final BasicDataSource pool = new BasicDataSource();
 
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
