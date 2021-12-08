@@ -19,72 +19,8 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-    <title>TODO</title>
-
-    <script>
-        getList();
-
-        function getList() {
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8080/job4j_todo_war_exploded/item.do",
-                dataType: "json",
-                data: {
-                    show_all: $('#show_all').is(':checked')
-                }
-            }).done(function (data) {
-                showAllItems(data);
-            }).fail(function () {
-                console.log('error into getList');
-            });
-        }
-
-        function showAllItems(data) {
-            $('#table tbody > tr').html('');
-            for (let i = 0; i < data.length; i++) {
-                let id = data[i]['id'];
-                let description = data[i]['description'];
-                let created = data[i]['created'];
-                let done = data[i]['done'];
-                $('#table tr:last').after(
-                    '<tr>' +
-                    '<td>' + '<input type="checkbox" id="' + id + '" onchange="itemDone(id)">' + '</td>' +
-                    '<td>' + description + '</td>' +
-                    '<td>' + created + '</td>' +
-                    '</tr>');
-                if (done) {
-                    document.getElementById(id).setAttribute('checked', 'true');
-                }
-            }
-            console.log('take list done');
-        }
-
-        function itemDone(id) {
-            console.log('checked=' + id);
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8080/job4j_todo_war_exploded/update.do",
-                dataType: "json",
-                data: {
-                    id: id
-                }
-            });
-            setTimeout(getList, 1000);
-        }
-
-        function addItem() {
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/job4j_todo_war_exploded/item.do",
-                dataType: "json",
-                data: {
-                    description: $('#add_item').val()
-                }
-            });
-            getList();
-        }
-    </script>
+    <script src="scripts.js"></script>
+    <script>getList()</script>
     <title>TODO</title>
 </head>
 <body>

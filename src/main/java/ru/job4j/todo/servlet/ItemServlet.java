@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.storage.HbmStore;
-import ru.job4j.todo.storage.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,13 +18,12 @@ import java.util.List;
 
 public class ItemServlet extends HttpServlet {
 
-    private final Store store = new HbmStore();
     private static final Gson GSON = new GsonBuilder().create();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Item> itemList = (List<Item>) store.findAll();
+        List<Item> itemList = (List<Item>) HbmStore.instOf().findAll();
         if (!"true".equals(req.getParameter("show_all"))) {
             itemList.removeIf(Item::isDone);
         }
@@ -42,13 +40,16 @@ public class ItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String description = req.getParameter("description");
+
         Item item = new Item(
                 0,
                 description,
                 Timestamp.from(Instant.now()),
-                false
+                false,
+                HbmStore.instOf().findUserByEmail(req.getParameter("email"))
         );
-        store.save(item);
+        HbmStore.instOf().save(item);
+        doGet(req, resp);
     }
 
 }
