@@ -28,6 +28,17 @@
 <h1 align="center">TODO список</h1>
 
 <div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li>
+                <span class="badge badge-primary" id="username"></span>
+                <script>getUserName()</script>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout.do">Выйти</a>
+            </li>
+        </ul>
+    </div>
     <div class="card" style="width: 100%">
         <div class="card-header">
             Добавить новое задание
@@ -55,6 +66,7 @@
                     <th scope="col">Выполнено</th>
                     <th scope="col">Задание</th>
                     <th scope="col">Дата создания</th>
+                    <th scope="col">Автор</th>
                 </tr>
                 </thead>
                 <tbody>

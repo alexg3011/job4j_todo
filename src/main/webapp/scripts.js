@@ -20,15 +20,18 @@ function showAllItems(data) {
         let description = data[i]['description'];
         let created = data[i]['created'];
         let done = data[i]['done'];
+        let author = data[i]['user'].name;
         $('#table tr:last').after(
             '<tr>' +
             '<td>' + '<input type="checkbox" id="' + id + '" onchange="itemDone(id)">' + '</td>' +
             '<td>' + description + '</td>' +
             '<td>' + created + '</td>' +
+            '<td>' + author + '</td>' +
             '</tr>');
         if (done) {
             document.getElementById(id).setAttribute('checked', 'true');
         }
+
     }
     console.log('take list done');
 }
@@ -56,4 +59,16 @@ function addItem() {
         }
     });
     getList();
+}
+
+function getUserName() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/job4j_todo_war_exploded/index.do",
+        dataType: "json"
+    }).done(function (user) {
+        document.getElementById('username').innerHTML = user.name;
+    }).fail(function () {
+        console.log('error username')
+    });
 }

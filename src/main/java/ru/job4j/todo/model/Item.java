@@ -29,6 +29,15 @@ public class Item {
         this.user = user;
     }
 
+    public static Item of(String description, User user) {
+        Item item = new Item();
+        item.description = description;
+        item.created = new Timestamp(System.currentTimeMillis());
+        item.done = false;
+        item.user = user;
+        return item;
+    }
+
     public int getId() {
         return id;
     }

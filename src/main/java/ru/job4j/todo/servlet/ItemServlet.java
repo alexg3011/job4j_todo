@@ -3,6 +3,7 @@ package ru.job4j.todo.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.storage.HbmStore;
 
 import javax.servlet.ServletException;
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 public class ItemServlet extends HttpServlet {
@@ -40,16 +39,7 @@ public class ItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String description = req.getParameter("description");
-
-        Item item = new Item(
-                0,
-                description,
-                Timestamp.from(Instant.now()),
-                false,
-                HbmStore.instOf().findUserByEmail(req.getParameter("email"))
-        );
-        HbmStore.instOf().save(item);
-        doGet(req, resp);
+        User user = (User) req.getSession().getAttribute("user");
+        HbmStore.instOf().save(Item.of(description, user));
     }
-
 }

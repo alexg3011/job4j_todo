@@ -23,6 +23,14 @@ public class User {
         this.password = password;
     }
 
+    public static User of(String name, String email, String password) {
+        User user = new User();
+        user.name = name;
+        user.email = email;
+        user.password = password;
+        return user;
+    }
+
     public int getId() {
         return id;
     }
@@ -57,8 +65,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(email, user.email);
     }
@@ -67,4 +79,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(email);
     }
+
 }
