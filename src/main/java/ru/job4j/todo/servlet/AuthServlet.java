@@ -2,7 +2,6 @@ package ru.job4j.todo.servlet;
 
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.storage.HbmStore;
-import ru.job4j.todo.storage.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +21,7 @@ public class AuthServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         User user = HbmStore.instOf().findUserByEmail(email);
-        if (user != null && user.getEmail().equals(email) && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password)) {
             HttpSession sc = req.getSession();
             sc.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/index.html");
