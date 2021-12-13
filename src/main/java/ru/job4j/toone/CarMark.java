@@ -13,13 +13,17 @@ public class CarMark {
     private int id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "mark")
     private List<CarModel> cars = new ArrayList<>();
 
     public static CarMark of(String name) {
         CarMark carMark = new CarMark();
         carMark.name = name;
         return carMark;
+    }
+
+    public CarMark() {
+
     }
 
     public void addCar(CarModel cm) {

@@ -10,10 +10,13 @@ public class CarModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-
-    public static CarModel of(String name) {
+    @ManyToOne
+    @JoinColumn(name = "carmark_id")
+    private CarMark mark;
+    public static CarModel of(String name, CarMark carMark) {
         CarModel carModel = new CarModel();
         carModel.name = name;
+        carModel.mark = carMark;
         return carModel;
     }
 
@@ -55,5 +58,13 @@ public class CarModel {
         return "CarModel{"
                 + "name='" + name + '\''
                 + '}';
+    }
+
+    public CarMark getMark() {
+        return mark;
+    }
+
+    public void setMark(CarMark mark) {
+        this.mark = mark;
     }
 }
