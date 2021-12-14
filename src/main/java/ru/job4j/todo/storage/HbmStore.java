@@ -12,6 +12,7 @@ import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 
 import java.util.List;
+import java.util.TimeZone;
 import java.util.function.Function;
 
 public class HbmStore implements Store {
@@ -121,7 +122,7 @@ public class HbmStore implements Store {
     }
 
     private <T> T tx(final Function<Session, T> command) {
-        final Session session = sf.openSession();
+        final Session session = sf.withOptions().jdbcTimeZone(TimeZone.getTimeZone("UTC")).openSession();
         final Transaction tx = session.beginTransaction();
         try {
             T rsl = command.apply(session);

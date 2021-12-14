@@ -3,6 +3,7 @@ package ru.job4j.todo.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
-    private Timestamp created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
 
     @ManyToOne
@@ -29,7 +31,7 @@ public class Item {
     public static Item of(String description, User user) {
         Item item = new Item();
         item.description = description;
-        item.created = new Timestamp(System.currentTimeMillis());
+        item.created = new Date(System.currentTimeMillis());
         item.done = false;
         item.user = user;
         return item;
@@ -55,7 +57,7 @@ public class Item {
         this.description = description;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
