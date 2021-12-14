@@ -40,6 +40,8 @@ public class ItemServlet extends HttpServlet {
             throws ServletException, IOException {
         String description = req.getParameter("description");
         User user = (User) req.getSession().getAttribute("user");
-        HbmStore.instOf().save(Item.of(description, user));
+        String categoriesStr = req.getParameter("categories");
+        String[] categories = categoriesStr.substring(0, categoriesStr.length() - 1).split(",");
+        HbmStore.instOf().save(Item.of(description, user), categories);
     }
 }
