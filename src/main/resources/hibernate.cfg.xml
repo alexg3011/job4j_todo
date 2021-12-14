@@ -26,5 +26,8 @@
         <mapping class="ru.job4j.toone.CarModel"/>
         <mapping class="ru.job4j.manytomany.Author"/>
         <mapping class="ru.job4j.manytomany.Book"/>
+        <mapping class="ru.job4j.cars.Engine"/>
+        <mapping class="ru.job4j.cars.Car"/>
+        <mapping class="ru.job4j.cars.Driver"/>
     </session-factory>
 </hibernate-configuration>
