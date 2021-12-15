@@ -55,8 +55,12 @@ public class VacancyBase {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         VacancyBase that = (VacancyBase) o;
         return id == that.id;
     }
@@ -68,10 +72,10 @@ public class VacancyBase {
 
     @Override
     public String toString() {
-        return "VacancyBase{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", vacancies=" + vacancies +
-                '}';
+        return "VacancyBase{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", vacancies=" + vacancies
+                + '}';
     }
 }

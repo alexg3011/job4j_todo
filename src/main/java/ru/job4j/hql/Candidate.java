@@ -62,8 +62,12 @@ public class Candidate {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
         return id == candidate.id;
     }
@@ -83,12 +87,12 @@ public class Candidate {
 
     @Override
     public String toString() {
-        return "Candidate{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", experience='" + experience + '\'' +
-                ", salary=" + salary +
-                ", base=" + base +
-                '}';
+        return "Candidate{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", experience='" + experience + '\''
+                + ", salary=" + salary
+                + ", base=" + base
+                + '}';
     }
 }
