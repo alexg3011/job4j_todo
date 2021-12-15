@@ -17,7 +17,7 @@ public class Car {
             @JoinColumn(name = "driver_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "car_id", nullable = false, updatable = false)})
-    private List<Driver> drivers = new ArrayList<>();
+    private Set<Driver> drivers = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK"))
@@ -59,11 +59,11 @@ public class Car {
                 + '}';
     }
 
-    public List<Driver> getDrivers() {
+    public Set<Driver> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(List<Driver> drivers) {
+    public void setDrivers(Set<Driver> drivers) {
         this.drivers = drivers;
     }
 
