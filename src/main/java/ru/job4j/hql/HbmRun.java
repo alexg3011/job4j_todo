@@ -45,6 +45,25 @@ public class HbmRun {
                     .setParameter("cId", 1)
                     .executeUpdate();
 
+            VacancyBase base = VacancyBase.of("Java");
+
+            Vacancy vacancy1 = Vacancy.of("Junior", "Sber need junior");
+            Vacancy vacancy2 = Vacancy.of("Middle", "Alfa need middle");
+            Vacancy vacancy3 = Vacancy.of("Senior", "Epam need senior");
+            base.addVacancy(vacancy1);
+            base.addVacancy(vacancy2);
+            base.addVacancy(vacancy3);
+            session.save(base);
+Candidate candidate4 = Candidate.of("Petr", "Java Senior", 200000);
+            candidate4.setBase(base);
+            session.save(candidate4);
+
+            Candidate candidate = session.createQuery("select distinct c from Candidate c "
+                    + "join fetch c.base b "
+                    + "join fetch b.vacancies v "
+                    + "where c.id = :ids", Candidate.class
+            ).setParameter("ids", 4).uniqueResult();
+            System.out.println(candidate);
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {

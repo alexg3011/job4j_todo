@@ -13,6 +13,10 @@ public class Candidate {
     private String experience;
     private int salary;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "base_id")
+    private VacancyBase base;
+
     public Candidate() {
     }
 
@@ -69,6 +73,14 @@ public class Candidate {
         return Objects.hash(id);
     }
 
+    public VacancyBase getBase() {
+        return base;
+    }
+
+    public void setBase(VacancyBase base) {
+        this.base = base;
+    }
+
     @Override
     public String toString() {
         return "Candidate{" +
@@ -76,6 +88,7 @@ public class Candidate {
                 ", name='" + name + '\'' +
                 ", experience='" + experience + '\'' +
                 ", salary=" + salary +
+                ", base=" + base +
                 '}';
     }
 }
