@@ -12,8 +12,7 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OrdersStoreTest {
     private BasicDataSource pool = new BasicDataSource();
@@ -69,9 +68,9 @@ public class OrdersStoreTest {
 
         List<Order> all = (List<Order>) store.findAll();
 
-        assertThat(all.size(), is(1));
-        assertThat(all.get(0).getDescription(), is("description1"));
-        assertThat(all.get(0).getId(), is(1));
+        assertEquals(all.size(), 1);
+        assertEquals(all.get(0).getDescription(), "description1");
+        assertEquals(all.get(0).getId(), 1);
     }
 
     @Test
