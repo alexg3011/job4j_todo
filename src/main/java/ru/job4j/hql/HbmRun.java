@@ -33,7 +33,7 @@ public class HbmRun {
 
             Query query3 = session.createQuery("from Candidate c where c.name = :cName");
             query3.setParameter("cName", "Alex");
-            System.out.println(query3.uniqueResult());
+            System.out.println(query3);
 
             session.createQuery("update Candidate c set c.experience = :newExp, c.salary = :newSal where c.id = :fId")
                     .setParameter("newExp", "Pascal")
@@ -54,7 +54,7 @@ public class HbmRun {
             base.addVacancy(vacancy2);
             base.addVacancy(vacancy3);
             session.save(base);
-Candidate candidate4 = Candidate.of("Petr", "Java Senior", 200000);
+            Candidate candidate4 = Candidate.of("Petr", "Java Senior", 200000);
             candidate4.setBase(base);
             session.save(candidate4);
 
