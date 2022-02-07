@@ -4,11 +4,11 @@
 назначать категорию важности. Присутствует авторизация и разделение дел по пользователям.
 
 Технологии: 
--Hibernate
--Servlets
--Ajax, HTML
--Java
--Tomcat
+- Hibernate
+- Servlets
+- Ajax, HTML
+- Java
+- Tomcat
 
 ![alt text](images/0.jpg)
 ![alt text](images/1.jpg)
