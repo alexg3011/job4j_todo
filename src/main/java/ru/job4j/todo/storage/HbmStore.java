@@ -11,8 +11,7 @@ import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.function.Function;
 
 public class HbmStore implements Store {
@@ -24,6 +23,7 @@ public class HbmStore implements Store {
             .buildMetadata().buildSessionFactory();
 
     private HbmStore() {
+
     }
 
     private static final class Lazy {

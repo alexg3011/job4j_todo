@@ -22,15 +22,5 @@
         <mapping class="ru.job4j.todo.model.Item"/>
         <mapping class="ru.job4j.todo.model.User"/>
         <mapping class="ru.job4j.todo.model.Category"/>
-        <mapping class="ru.job4j.toone.CarMark"/>
-        <mapping class="ru.job4j.toone.CarModel"/>
-        <mapping class="ru.job4j.manytomany.Author"/>
-        <mapping class="ru.job4j.manytomany.Book"/>
-        <mapping class="ru.job4j.cars.Engine"/>
-        <mapping class="ru.job4j.cars.Car"/>
-        <mapping class="ru.job4j.cars.Driver"/>
-        <mapping class="ru.job4j.hql.Candidate"/>
-        <mapping class="ru.job4j.hql.Vacancy"/>
-        <mapping class="ru.job4j.hql.VacancyBase"/>
     </session-factory>
 </hibernate-configuration>
