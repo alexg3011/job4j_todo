@@ -15,4 +15,12 @@
 ![alt text](images/2.jpg)
 ![alt text](images/3.jpg)
 
+<br>
+<h2>
+  Сборка и установка:
+  </h2>
+  mvn install
+  <br>
+Сборка проекта с помощью Maven в WAR-архив для последующего развертывания в контейнере сервлетов (Apache Tomcat).
+
 
